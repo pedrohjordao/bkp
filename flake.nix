@@ -20,9 +20,8 @@
 
       in rec {
         packages = {
-          # replace hello-world with your package name
-          hello-world = (rustPkgs.workspace.hello-world {}).bin;
-          default = packages.hello-world;
+          bkp = (rustPkgs.workspace.bkp {}).bin;
+          default = packages.bkp;
         };
       }
     );
