@@ -1,11 +1,14 @@
-- name: Nix Shell
-  # You may pin to the exact commit or the version.
-  # uses: workflow/nix-shell-action@c98e2f8b5dd246aa88c56e1a018503dfe9fd1789
-  uses: workflow/nix-shell-action@v3.2.0
-  with:
-    # Interpreter to use in the nix shell shebang
-    interpreter: # default is bash
-    # Comma separated list of packages that are to be available in your shell
-    packages: # default is bash
-    # The actual script to execute in the shell
-    script: cargo build
+name: "Test"
+on:
+  pull_request:
+  push:
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: cachix/install-nix-action@v18
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+    - run: nix build
+    - run: nix flake check
